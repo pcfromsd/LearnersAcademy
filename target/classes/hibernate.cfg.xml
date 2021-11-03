@@ -14,5 +14,10 @@
 		<mapping class="com.simplilearn.entity.Teacher" />
 		<mapping class="com.simplilearn.entity.Student" />
 		<mapping class="com.simplilearn.entity.Classs" />
+		<mapping class="com.simplilearn.entity.Studentv" />		
+		<mapping class="com.simplilearn.entity.ClassTeacherView" />		
+		<mapping class="com.simplilearn.entity.ClassTeacher" />
+		<mapping class="com.simplilearn.entity.Student_Class" />
+		<mapping class="com.simplilearn.entity.StudentClassView" />		
 	</session-factory>
 </hibernate-configuration>

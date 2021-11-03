@@ -41,6 +41,7 @@ public class AddStudent extends HttpServlet {
 				HashMap<Object, Object> studentMap = new HashMap<>();
 				studentMap.put("studentId", student.getStudentId());
 				studentMap.put("studentName", student.getStudentName());
+				studentMap.put("studentGrade", student.getStudentGrade());
 				studentsMapList.add(studentMap);
 			}
 			JSONArray jsonArray = new JSONArray(studentsMapList);

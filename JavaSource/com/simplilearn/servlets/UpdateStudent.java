@@ -35,6 +35,7 @@ public class UpdateStudent extends HttpServlet {
 
 		int studentId = -1;
 		String studentName = request.getParameter("studentname");
+		String studentGrade = request.getParameter("studentgrade");
 		String CRUDId = request.getParameter("CRUDId");
 		
 		if (CRUDId.equalsIgnoreCase("U"))
@@ -45,6 +46,8 @@ public class UpdateStudent extends HttpServlet {
 			Session session = factory.openSession();
 	
 			studentU.setStudentName(studentName);
+			studentU.setStudentGrade(studentGrade);
+
 			if (CRUDId.equalsIgnoreCase("U"))
 				studentU.setStudentId(studentId);
 
@@ -65,6 +68,7 @@ public class UpdateStudent extends HttpServlet {
 				HashMap<Object, Object> studentMap = new HashMap<>();
 				studentMap.put("studentId", student.getStudentId());
 				studentMap.put("studentName", student.getStudentName());				
+				studentMap.put("studentGrade", student.getStudentGrade());				
 				studentsMapList.add(studentMap);
 			}
 			JSONArray jsonArray = new JSONArray(studentsMapList);

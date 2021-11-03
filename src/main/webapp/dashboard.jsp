@@ -30,9 +30,12 @@
 					    <a href="ReadTeachers"> <button class="btn btn-primary">Teachers</button></a>
 					    <a href="ReadClasses"> <button class="btn btn-primary">Classes</button></a>
 					    <a href="ReadStudents"> <button class="btn btn-primary">Students</button></a>
-					    <a href="AssignTeacher"> <button>Assign Teacher to Class</button></a>
-					    <a href="AssignClass"> <button>Assign Class to Student</button></a>
-					    
+					    <!-- <a href="AssignClass"> <button>Assign Class to Student</button></a>  -->
+					    <a href="ReadStudentClassView"> <button>Assign Class to Student</button></a>
+					    <!-- <a href="AssignTeacher"> <button>Assign Teacher to Class</button></a>  -->
+					    <a href="ReadClassTeacherView"> <button>Assign Teacher to Class</button></a>
+					    <a href="ReadStudentvs"> <button class="btn btn-primary">Student Details</button></a>
+					    					    
 					    <!--  
 					    ...
 					    <a href="AddSubject"> <button>Add a Subject</button></a>
@@ -66,7 +69,10 @@
 			String addTeacher = request.getParameter("addTeacher");
 			String addTeacherForUpdate = request.getParameter("addTeacherForUpdate");			
 			String classSubjectView = request.getParameter("classSubjectView");
-
+			String studentvs = request.getParameter("studentvs");
+			String classTeacherView = request.getParameter("classTeacherView");		
+			String studentClassView = request.getParameter("studentClassView");
+			
 			if (Objects.nonNull(students)) {
 			%>
 				<br/>
@@ -74,8 +80,9 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>Name</th>
+							<th>Student Id</th>
+							<th>Student Name</th>
+							<th>Student Grade</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,10 +92,12 @@
 								for (HashMap<Object, Object> eachMap : studentsList) {
 									int studentId = (Integer) eachMap.get("studentId");
 									String studentName = (String) eachMap.get("studentName");
+									String studentGrade = (String) eachMap.get("studentGrade");
 							%>
 									<tr>
 										<td><%=studentId%></td>
 										<td><%=studentName%></td>
+										<td><%=studentGrade%></td>
 									</tr>
 								<%
 								}
@@ -121,8 +130,9 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>Id</th>
-							<th>Name</th>
+							<th>Student Id</th>
+							<th>Student Name</th>
+							<th>Student Grade</th>
 						</tr>
 					</thead>
 					
@@ -133,10 +143,12 @@
 								for (HashMap<Object, Object> eachMap : studentsList) {
 									int studentId = (Integer) eachMap.get("studentId");
 									String studentName = (String) eachMap.get("studentName");
+									String studentGrade = (String) eachMap.get("studentGrade");
 							%>
 									<tr>
 										<td><%=studentId%></td>
 										<td><%=studentName%></td>
+										<td><%=studentGrade%></td>
 									</tr>
 								<%
 								}
@@ -151,39 +163,19 @@
 						<label for="studentName">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Name:</label> 
 						<input type="text" id="studentname" name="studentname" size="50">
 					</div>
+
+					<div class="form-group">
+						<label for="studentGrade">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student Grade:</label> 
+						<input type="text" id="studentname" name="studentgrade" size="50">
+					</div>
+
+
 					<button type="submit" class="btn btn-primary">Update Database</button>
 					<input type="hidden" id="CRUDId" name="CRUDId" value="I">
 				</form>
 			<%				
 			}
 		    %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 			<!-- --------------------------------------------------------------------------------------------------------------------- -->
@@ -646,19 +638,232 @@
 			<!-- --------------------------------------------------------------------------------------------------------------------- -->
 			<!-- --------------------------------------------------------------------------------------------------------------------- -->
 
+            <%
+            if (Objects.nonNull(studentvs)) {
+			%>
+				<br/>
+				<p><b><h4>Students Master List</h4></b></p>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Student Id</th>
+							<th>Student Name</th>
+							<th>Student Grade</th>
+  							<th>Class Id</th>
+  							<th>Section</th>
+  							<th>Subject Id</th>
+  							<th>Subject Name</th>
+  							<th>Subject Shortcut</th>
+  							<th>Teacher Id</th>
+  							<th>Teacher Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						    <%
+							List<HashMap<Object, Object>> studentvsList = new ObjectMapper().readValue(studentvs, List.class);
+		
+								for (HashMap<Object, Object> eachMap : studentvsList) {
+									int id = (Integer) eachMap.get("id");
+									int studentId = (Integer) eachMap.get("studentId");
+									String studentName = (String) eachMap.get("studentName");									
+									String studentGrade = (String) eachMap.get("studentGrade");									
+									int classId = (Integer) eachMap.get("classId");
+									String section = (String) eachMap.get("section");
+									int subjectId = (Integer) eachMap.get("subjectId");
+									String subjectName = (String) eachMap.get("subjectName");
+									String subjectShortcut = (String) eachMap.get("subjectShortcut");
+									int teacherId = (Integer) eachMap.get("teacherId");
+									String teacherName = (String) eachMap.get("teacherName");
+							%>
+									<tr>
+										<td><%=studentId%></td>
+										<td><%=studentName%></td>
+										<td><%=studentGrade%></td>
+										<td><%=classId%></td>
+										<td><%=section%></td>
+										<td><%=subjectId%></td>
+										<td><%=subjectName%></td>
+										<td><%=subjectShortcut%></td>
+										<td><%=teacherId%></td>
+										<td><%=teacherName%></td>
+									</tr>
+								<%
+								}
+						        %>
+					</tbody>
+				</table>
+								
+			<%				
+			}
+		    %>
 
 
 
 
 
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+            <%
+            if (Objects.nonNull(classTeacherView)) {
+			%>
+				<br/>
+				<p><b><h4>Classes with Teacher Assignmened</h4></b></p>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Class Id</th>
+							<th>Section</th>
+							<th>Subject Id</th>
+							<th>Subject Name</th>
+							<th>Subject Shortcut</th>
+							<th>Teacher Id</th>
+							<th>Teacher Name</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						    <%
+							List<HashMap<Object, Object>> ctViewList = new ObjectMapper().readValue(classTeacherView, List.class);
+		
+								for (HashMap<Object, Object> eachMap : ctViewList) {
+									int classId = (Integer) eachMap.get("classId");
+									String section = (String) eachMap.get("section");
+									int subjectId = (Integer) eachMap.get("subjectId");
+									String subjectName = (String) eachMap.get("subjectName");
+									String subjectShortcut = (String) eachMap.get("subjectShortcut");
+									int teacherId = (Integer) eachMap.get("teacherId");
+									String teacherIdS = Integer.toString(teacherId);
+									String ns = "null";
+									String teacherName = (String) eachMap.get("teacherName");																		
+						            if (teacherId == -1) 
+						            	teacherIdS = ns;									
+							%>
+									<tr>
+										<td><%=classId%></td>
+										<td><%=section%></td>
+										<td><%=subjectId%></td>
+										<td><%=subjectName%></td>
+										<td><%=subjectShortcut%></td>
+										<td><%=teacherIdS%></td>
+										<td><%=teacherName%></td>
+									</tr>
+								<%
+								}
+						        %>
+					</tbody>								
+				</table>								
+
+
+					
+				</br></br>
+				<p><b><h4>Assign a Teacher to a Class (where no assignment exists)</h4></b></p>
+				<form action="AssignTeacherToClass" method="post">
+					<div class="form-group">
+						<label for="classid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class ID:</label> 
+						<input type="text" id="classid" name="classid" size="10">
+					</div>
+					<div class="form-group">
+						<label for="teacherid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Teacher ID:</label> 
+						<input type="text" id="teacherid" name="teacherid" size="50">
+					</div>
+					<button type="submit" class="btn btn-primary">Update Database</button>
+					<input type="hidden" id="CRUDId" name="CRUDId" value="I">
+				</form>
+					
+					
+							
+
+			<%				
+			}
+		    %>
 
 
 
 
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+			<!-- --------------------------------------------------------------------------------------------------------------------- -->
+
+            <%
+            if (Objects.nonNull(studentClassView)) {
+			%>
+				<br/>
+				<p><b><h4>Classes with Teacher Assignmened</h4></b></p>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Student Id</th>
+							<th>Student Name</th>
+							<th>Student Grade</th>
+							<th>Class Id</th>
+							<th>Section</th>
+							<th>Subject Id</th>
+							<th>Subject Name</th>
+							<th>Subject Shortcut</th>
+						</tr>
+					</thead>
+					<tbody>
+						    <%
+							List<HashMap<Object, Object>> scViewList = new ObjectMapper().readValue(studentClassView, List.class);
+		
+								for (HashMap<Object, Object> eachMap : scViewList) {
+									int studentId = (Integer) eachMap.get("studentId");
+									String studentName = (String) eachMap.get("studentName");
+									String studentGrade = (String) eachMap.get("studentGrade");
+									int classId = (Integer) eachMap.get("classId");
+									String section = (String) eachMap.get("section");
+									int subjectId = (Integer) eachMap.get("subjectId");
+									String subjectName = (String) eachMap.get("subjectName");
+									String subjectShortcut = (String) eachMap.get("subjectShortcut");
 
 
+									String classIdS = Integer.toString(classId);
+									String subjectIdS = Integer.toString(subjectId);
+									String ns = "null";									
+						            if (classId == -1) 
+						            	classIdS = ns;	
+						            if (subjectId == -1) 
+						            	subjectIdS = ns;	
+						            
+							%>
+									<tr>
+										<td><%=studentId%></td>
+										<td><%=studentName%></td>
+										<td><%=studentGrade%></td>
+										<td><%=classIdS%></td>
+										<td><%=section%></td>
+										<td><%=subjectIdS%></td>
+										<td><%=subjectName%></td>
+										<td><%=subjectShortcut%></td>
+									</tr>
+								<%
+								}
+						        %>
+					</tbody>								
+				</table>								
 
+				</br></br>
+				<p><b><h4>Assign a Class to a Student (where no assignment exists)</h4></b></p>
+				<form action="AssignClassToStudent" method="post">
+					<div class="form-group">
+						<label for="studentid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Student ID:</label> 
+						<input type="text" id="studentid" name="studentid" size="50">
+					</div>
+					<div class="form-group">
+						<label for="classid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class ID:</label> 
+						<input type="text" id="classid" name="classid" size="10">
+					</div>
+					<button type="submit" class="btn btn-primary">Update Database</button>
+					<input type="hidden" id="CRUDId" name="CRUDId" value="I">
+				</form>
 
-	</div>
+			<%				
+			}
+		    %>
+
+	</div>	
 </body>
 </html>

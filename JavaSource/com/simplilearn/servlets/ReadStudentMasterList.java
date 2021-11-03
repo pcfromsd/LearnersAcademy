@@ -16,13 +16,13 @@ import org.hibernate.SessionFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.simplilearn.entity.Student;
+import com.simplilearn.entity.StudentView_T;
 import com.simplilearn.util.HibernateUtil;
 
-public class ReadStudents extends HttpServlet {
+public class ReadStudentMasterList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public ReadStudents() {
+	public ReadStudentMasterList() {
 		super();
 	}
 
@@ -32,20 +32,20 @@ public class ReadStudents extends HttpServlet {
 			SessionFactory factory = HibernateUtil.getSessionFactory();
 			Session session = factory.openSession();
 
-			List<Student> studentsList = session.createQuery("select _student from Student _student").getResultList();
+			List<StudentView_T> studentView_TList = session.createQuery("select _studentView_T from StudentView_T _studentView_T").getResultList();
 			PrintWriter out = response.getWriter();
-			out.println("studentsList" + studentsList);
+			out.println("studentView_TList" + studentView_TList);
 
-			List<HashMap<Object, Object>> studentsMapList = new ArrayList<>();
-			for (Student student : studentsList) {
+			List<HashMap<Object, Object>> studentsViewMapList = new ArrayList<>();
+			for (StudentView_T studentView_T : studentView_TList) {
 				HashMap<Object, Object> stduentMap = new HashMap<>();
-				stduentMap.put("studentId", student.getStudentId());
-				stduentMap.put("studentName", student.getStudentName());
-				stduentMap.put("studentGrade", student.getStudentGrade());
-				studentsMapList.add(stduentMap);
+				stduentMap.put("Id", studentView_T.getId());
+				stduentMap.put("studentId", studentView_T.getStudentId());
+				stduentMap.put("studentName", studentView_T.getStudentName());
+				studentsViewMapList.add(stduentMap);
 			}
-			JSONArray jsonArray = new JSONArray(studentsMapList);
-			request.getRequestDispatcher("dashboard.jsp?students=" + jsonArray.toString()).forward(request, response);
+			JSONArray jsonArray = new JSONArray(studentsViewMapList);
+			request.getRequestDispatcher("dashboard.jsp?studentMasterList=" + jsonArray.toString()).forward(request, response);
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

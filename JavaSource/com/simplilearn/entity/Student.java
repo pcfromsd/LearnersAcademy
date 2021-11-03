@@ -14,6 +14,7 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int studentId;
 	private String studentName;
+	private String studentGrade;
 
 	public Student() {
 	}
@@ -33,4 +34,14 @@ public class Student {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
+
+	public String getStudentGrade() {
+		return studentGrade;
+	}
+
+	public void setStudentGrade(String studentGrade) {
+		this.studentGrade = studentGrade;
+	}
+
 }
+
