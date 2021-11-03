@@ -224,24 +224,6 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE TRIGGER after_Student_insert
-AFTER INSERT
-ON Student FOR EACH ROW
-BEGIN
-
-  
-	INSERT INTO StudentClassView(StudentId, StudentName, StudentGrade)
-       select StudentId, StudentName, StudentGrade
-         from Student as s
-         where s.StudentId = new.StudentId;
-END$$
-
-DELIMITER ;
-
--------------------------------------------------------------------------------------------------
-
-DELIMITER $$
-
 CREATE TRIGGER after_Student_Class_insert
 AFTER INSERT
 ON Student_Class FOR EACH ROW
@@ -266,6 +248,13 @@ CREATE TRIGGER after_Student_insert
 AFTER INSERT
 ON Student FOR EACH ROW
 BEGIN
+
+	INSERT INTO StudentClassView(StudentId, StudentName, StudentGrade)
+       select StudentId, StudentName, StudentGrade
+         from Student as s
+         where s.StudentId = new.StudentId;
+
+
 	IF not exists (select 'x' from Studentv where StudentId = new.StudentId) THEN
 		insert into Studentv 
 			(StudentId, StudentName, StudentGrade, ClassID, Section, subjectId, SubjectName, SubjectShortcut, TeacherId, TeacherName) 

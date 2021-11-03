@@ -710,7 +710,7 @@
             if (Objects.nonNull(classTeacherView)) {
 			%>
 				<br/>
-				<p><b><h4>Classes with Teacher Assignmened</h4></b></p>
+				<p><b><h4>Classes with Teacher Assigned</h4></b></p>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -791,7 +791,7 @@
             if (Objects.nonNull(studentClassView)) {
 			%>
 				<br/>
-				<p><b><h4>Classes with Teacher Assignmened</h4></b></p>
+				<p><b><h4>Students with Class/Grade Assigned</h4></b></p>
 				<table class="table table-striped">
 					<thead>
 						<tr>
